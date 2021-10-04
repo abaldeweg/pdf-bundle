@@ -1,0 +1,76 @@
+{% if meta.logo %}
+  <div style="text-align: left;"><img src="{{ meta.logo | raw | trim }}"></div>
+{% endif %}
+
+<table cellpadding="0" width="100%" style="margin-top: 100px;">
+  <tr>
+    <td>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <p style="font-size: 10px;">
+        {%- if meta.sender is iterable -%}
+          {%- for item in meta.sender -%}
+            {{ item }}{% if loop.last == false %},&nbsp;{% endif %}
+          {%- endfor -%}
+        {%- endif -%}
+      </p>
+      <p>
+        {%- if meta.receiver is iterable -%}
+          {%- for item in meta.receiver -%}
+            {{ item }}<br>
+          {%- endfor -%}
+        {%- endif -%}
+      </p>
+    </td>
+    <td>
+      <br>
+      <br>
+      <table width="100%" style="font-size: 12px;">
+        {% if meta.details is iterable %}
+          {% for item in meta.details %}
+            <tr>
+              <td style="width: 30%; text-align: right;">
+                {{ item.name }}
+              </td>
+              <td style="width: 70%; text-align: right;">
+                {{ item.value }}
+              </td>
+            </tr>
+          {% endfor %}
+        {% endif %}
+      </table>
+    </td>
+  </tr>
+</table>
+
+{% if meta.subject is iterable %}
+  {% for subject in meta.subject %}
+    <p>{{ subject }}</p>
+  {% endfor %}
+{% else %}
+  <p>{{meta.subject}}</p>
+{% endif %}
+
+<p>&nbsp;</p>
+
+{{ meta.salutation }}
+
+{% if content %}
+  {{ content | raw }}
+{% endif %}
+
+<p>&nbsp;</p>
+
+<p>
+  {%- if meta.valediction -%}
+    {{ meta.valediction }}
+  {% endif %}
+</p>
+
+{% for item in meta.signee %}
+  <p>&nbsp;</p>
+  <p>{{ item }}</p>
+{% endfor %}
